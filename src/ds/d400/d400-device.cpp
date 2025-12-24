@@ -197,14 +197,16 @@ namespace librealsense
     void d400_depth_sensor::open( const stream_profiles & requests )
     {
         group_multiple_fw_calls(*this, [&]() {
-            _depth_units = get_option(RS2_OPTION_DEPTH_UNITS).query();
-            set_frame_metadata_modifier([&](frame_additional_data& data) {data.depth_units = _depth_units.load(); });
+            // MINIMAL MODE: Skip depth_units query to reduce USB messages
+            //_depth_units = get_option(RS2_OPTION_DEPTH_UNITS).query();
+            //set_frame_metadata_modifier([&](frame_additional_data& data) {data.depth_units = _depth_units.load(); });
 
             synthetic_sensor::open(requests);
 
+            // MINIMAL MODE: Skip thermal monitoring to reduce USB messages
             // Activate Thermal Compensation tracking
-            if (supports_option(RS2_OPTION_THERMAL_COMPENSATION))
-                _owner->_thermal_monitor->update(true);
+            //if (supports_option(RS2_OPTION_THERMAL_COMPENSATION))
+            //    _owner->_thermal_monitor->update(true);
             }); //group_multiple_fw_calls
     }
 
