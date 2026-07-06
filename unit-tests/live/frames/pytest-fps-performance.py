@@ -29,7 +29,7 @@ import logging
 log = logging.getLogger(__name__)
 
 pytestmark = [
-    pytest.mark.context("weekly"),
+    pytest.mark.context("jetson"),
     pytest.mark.device_each("D400*"),
     pytest.mark.device_exclude("D401")
 ]
